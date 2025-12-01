@@ -25,7 +25,7 @@ OCI8とPDO_OCIのインストールには以下の2つの方法で可能
 
 2. dnfでphp84-php-pecl-oci8、php84-php-pecl-pdo_ociパッケージをインストール  
 メリット： gcc等のコンパイルパッケージが不要  
-デメリット： rpmbuild用のパッケージが必要なのと、remiの要求するlibclntsh.soのバージョンとOracleのlibclntsh.soのバージョンが合っていることが条件
+デメリット： rpmbuild用のパッケージが必要なのと、remiの要求するlibclntsh.soのバージョンとOracleのlibclntsh.soのバージョンが一致していることが条件
 
 後者の条件であれば、一旦rpmさえ作っておけば使い回しがきくので、そうなればrpmbuild用のパッケージも不要
 
