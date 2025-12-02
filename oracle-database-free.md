@@ -19,17 +19,17 @@ Oracle AI Database 26 Freeをインストールするのに、以下の環境と
 ```
 $ mkdir /home/xxx/ISO
 $ curl -L https://repo.almalinux.org/almalinux/9.6/isos/x86_64/AlmaLinux-9.6-x86_64-boot.iso -o /home/xxx/ISO/AlmaLinux-9.6-x86_64-boot.iso
-$ mkdir -p /home/xxx/kvm/oracle23cfree
-$ cp -p /usr/share/OVMF/OVMF_VARS.fd /home/xxx/kvm/oracle23cfree
-$ qemu-img create -f qcow2 /home/xxx/kvm/oracle23cfree/oracle23cfree.qcow2 20G
+$ mkdir -p /home/xxx/kvm/oraclefree26ai
+$ cp -p /usr/share/OVMF/OVMF_VARS.fd /home/xxx/kvm/oraclefree26ai
+$ qemu-img create -f qcow2 /home/xxx/kvm/oraclefree26ai/oraclefree26ai.qcow2 20G
 $ qemu-system-x86_64 \
     -enable-kvm \
     -m 4096 \
     -smp 4 \
-    -drive file=/home/xxx/kvm/oracle23cfree/oracle23cfree.qcow2,format=qcow2 \
+    -drive file=/home/xxx/kvm/oraclefree26ai/oraclefree26ai.qcow2,format=qcow2 \
     -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE.fd \
-    -drive if=pflash,format=raw,file=/home/xxx/kvm/oracle23cfree/OVMF_VARS.fd \
-    -cdrom file=/home/xxx/ISO/AlmaLinux-9.6-x86_64-boot.iso \
+    -drive if=pflash,format=raw,file=/home/xxx/kvm/oraclefree26ai/OVMF_VARS.fd \
+    -cdrom /home/xxx/ISO/AlmaLinux-9.6-x86_64-boot.iso \
     -netdev user,id=net0,hostfwd=tcp::8080-:80,hostfwd=tcp::50022-:22 \
     -device virtio-net-pci,netdev=net0 \
     -device virtio-vga \
