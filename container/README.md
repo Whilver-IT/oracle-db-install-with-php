@@ -177,12 +177,14 @@ UBI9がうまくいったので、まさか本家であるOL9など恐れるに�
 
 そして、ついに結論
 
-犯人は**libxcrypt-compat**ただ1つ
+犯人は**libxcrypt-compat**ただ1つ  
 (この瞬間はマジで勝利の雄叫びレベルwww)
 
 ### 3-7. Oracleのrootfsだけlibxcrypt-compatが欠けているという衝撃の事実
 
-OL9.2 ISO → 入ってる(ちなみに9.7のISOでも入ってますw)
+libxcrypt-compatパッケージですが、
+
+OL9.2 ISO → 入ってる(ちなみに9.7のISOでも入ってますw)  
 OL9コンテナのrootfs (公式) → 入ってない
 
 だから、コンテナ版だけconfigureが失敗  
