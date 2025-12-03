@@ -4,7 +4,7 @@ RHEL系コンテナで Oracle を動かすまでの「壮絶な戦い」
 
 ## 1. 対応コンテナについて
 
-Oracle Database(Free 26ai / XE 21c)を**RHEL環境で"どこでも動く"**ようにするため
+Oracle Database(Free 26ai / XE 21c)を **RHEL環境で"どこでも動く"** ようにするため
 
 * CentOS Stream 9(RHEL直系)
 * Oracle Linux 9(Oracle本家)
@@ -65,8 +65,8 @@ ARG ORAINSTALLRPM
 
 ### 3-2. suのwrapper地獄
 
-PostgreSQLの経験から、gosuを使えばいけると思ったが…  
-**Oracleのinit scriptはsuの使い方が特殊で、普通にgosu差し替えでは動かない**
+PostgreSQLの経験から、gosuを使えばいけると思ったのですが…  
+**Oracleのinit scriptはsuの使い方が特殊で、普通にgosu差し替えでは動かない**ようです
 
 そこで、suをラッピングしてオプションをパースし直す「su wrapper」戦略へ
 ```
@@ -142,7 +142,7 @@ UBI9がうまくいったので、まさか本家であるOL9など恐れるに�
 
 本家なのに動かない…wwww
 
-でも、OL9.2(ISO)で問題なく動いてた記憶はありました([https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21cインストール.md](https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21cインストール.md))  
+でも、OL9.2(ISO)で問題なく動いてた記憶はありました([Oracle-XE-21cインストール.md](https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21cインストール.md))  
 → VirtualBoxで実験  
 → やはりOL9.2ならXE 21cのconfigureが成功
 
