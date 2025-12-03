@@ -108,6 +108,7 @@ UBI9のrootfsだけではpreinstallの依存が解決できず、CentOS Stream 9
 
 ### 3-4. CentOS Stream 9コンテナは素直
 
+OL9のコンテナから
 ```
 FROM quay.io/centos/centos:stream9
 ```
@@ -118,7 +119,7 @@ FROM quay.io/centos/centos:stream9
 
 次に、UBI9で
 ```
-ARG=ORAPREINSTALLRPM=https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm
+ARG ORAPREINSTALLRPM=https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm
 ARG ORAINSTALLRPM=https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-21c-1.0-1.ol8.x86_64.rpm
 ```
 と、XE 21cを対応させることにしました  
