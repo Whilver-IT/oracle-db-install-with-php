@@ -32,8 +32,8 @@ Remiリポジトリにもphp84-pecl-pdo-ociが追加されたことで
 
 という期待から、検証を開始しました  
 2023年にも挑戦しましたが、当時はPDO_OCI古く未対応だったため、思うような環境構築ができませんでした
-* [https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21c%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB.md](https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21c%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB.md)  
-* [https://github.com/Whilver-IT/crazyframework/blob/main/PDO_OCI%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%A6Oracle%E3%81%AE%E6%93%8D%E4%BD%9C.md](https://github.com/Whilver-IT/crazyframework/blob/main/PDO_OCI%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%A6Oracle%E3%81%AE%E6%93%8D%E4%BD%9C.md)  
+* [Oracle XE 21cをインストールして最低限使うところまで](https://github.com/Whilver-IT/crazyframework/blob/main/Oracle-XE-21c%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB.md)  
+* [PDO_OCIを使用してOracleを操作する](https://github.com/Whilver-IT/crazyframework/blob/main/PDO_OCI%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%A6Oracle%E3%81%AE%E6%93%8D%E4%BD%9C.md)  
 
 今回ようやくそのリベンジが果たせました  
 が、コンテナ化は地獄でした(でも楽しかったw)
