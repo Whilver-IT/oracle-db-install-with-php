@@ -160,6 +160,15 @@ libpath_utils \
 avahi-libs \
 lm_sensors-libs \
 xz \
+libX11-xcb \
+libXcomposite \
+libXi \
+libXinerama \
+libXrandr \
+libXrender \
+libXtst \
+libXv \
+libXxf86vm \
 file; \
 # 以下の依存解決は仕方なくCentOS Stream9のパッケージでお茶を濁しておくw
 # rpmのURLがバージョンアップなどで、ダウンロードできなくなる可能性はあることに注意
