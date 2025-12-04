@@ -26,9 +26,10 @@ docker pull container-registry.oracle.com/database/free:latest
 
 もともとLinux1台に、DB(Oracle)、Apache、php(PDOを使用)を全部まとめたいと考えていました  
 ちょうどOracle Free 26aiがリリースされたこと  
-そして、2024年8月にPDO_OCIが更新され、
-Remiリポジトリにもphp84-pecl-pdo-ociが追加されたことで
-> もしかして今なら全部入り環境作成できるのでは!?
+そして、2024年8月に[PDO_OCI](https://pecl.php.net/package/pdo_oci)が更新され、
+Remiリポジトリにもphp84-pecl-pdo-ociが追加されたことで  
+
+**もしかして今なら全部入り環境作成できるのでは!?**
 
 という期待から、検証を開始しました  
 2023年にも挑戦しましたが、当時はPDO_OCI古く未対応だったため、思うような環境構築ができませんでした

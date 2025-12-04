@@ -238,7 +238,7 @@ SQL>
 PDB$SEEDは/opt/oracle/oradata/FREE/pdbseedディレクトリ  
 FREEPDB1は/opt/oracle/oradata/FREE/FREEDB1ディレクトリ  
 にファイルが有るので、今回はTESTPDBというPDBを/opt/oracle/oradata/FREE/TESTPDBに作ることにする  
-(各自の環境で「FREEPDB」の部分は好きなものに置き換えていただいても構いません。また、DB名とディレクトリ名を合わせる必要もない(はず)です)
+(各自の環境で「TESTPDB」の部分は好きなものに置き換えていただいても構いません。また、DB名とディレクトリ名を合わせる必要もない(はず)です)
 
 ### 5-3. TESTPDBの作成
 
