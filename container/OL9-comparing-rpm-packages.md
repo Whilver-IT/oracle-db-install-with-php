@@ -127,23 +127,17 @@
     <td style="border:1px solid #000; border-collapse: collapse;">
       gobject-introspection-1.68.0-11.el9.x86_64
     </td>
-
-    <!-- ★ 背景色: #ff0 -->
     <td style="border:1px solid #000; border-collapse: collapse;">
       <svg width="260" height="22">
         <rect width="260" height="22" fill="#ff0" />
         <text x="2" y="16" font-size="14" fill="#000">gobject-introspection-1.68.0-11.el9.x86_64</text>
       </svg>
     </td>
-
-    <!-- ★ 背景色: #0ff（テキストなし） -->
     <td style="border:1px solid #000; border-collapse: collapse;">
       <svg width="260" height="22">
         <rect width="260" height="22" fill="#0ff" />
       </svg>
     </td>
-
-    <!-- ★ 背景色: #ff0 -->
     <td style="border:1px solid #000; border-collapse: collapse;">
       <svg width="260" height="22">
         <rect width="260" height="22" fill="#ff0" />
