@@ -153,7 +153,7 @@ UBI9がうまくいったので、まさか本家であるOL9など恐れるに�
 * OL9コンテナ
 * UBI9コンテナ
 
-比較表([OL9-comparing-rpm-package.xlsx](OL9-comparing-rpm-packages.xlsx))で差分を見てみました
+比較表([OL9-comparing-rpm-package.md](OL9-comparing-rpm-packages.md))で差分を見てみました
 
 はじめは、OL9.2の最小構成インストールとOL9.2のXE 21cインストール後で差異のあった、  
 **sssd-nfs-idmap**  
