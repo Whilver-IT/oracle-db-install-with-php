@@ -123,28 +123,8 @@
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">gmp-6.2.0-10.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gmp-6.2.0-10.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gmp-6.2.0-13.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gmp-6.2.0-13.el9.x86_64</td></tr>
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">gnupg2-2.3.3-2.el9_0.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnupg2-2.3.3-2.el9_0.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnupg2-2.3.3-4.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnupg2-2.3.3-4.el9.x86_64</td></tr>
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">gnutls-3.7.6-20.el9_2.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnutls-3.7.6-20.el9_2.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnutls-3.8.3-9.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gnutls-3.8.3-9.el9.x86_64</td></tr>
-<tr style="border:1px solid #000; border-collapse: collapse;">
-    <td style="border:1px solid #000; border-collapse: collapse;">
-      gobject-introspection-1.68.0-11.el9.x86_64
-    </td>
-    <td style="border:1px solid #000; border-collapse: collapse;">
-      <svg width="260" height="22">
-        <rect width="260" height="22" fill="#ff0" />
-        <text x="2" y="16" font-size="14" fill="#000">gobject-introspection-1.68.0-11.el9.x86_64</text>
-      </svg>
-    </td>
-    <td style="border:1px solid #000; border-collapse: collapse;">
-      <svg width="260" height="22">
-        <rect width="260" height="22" fill="#0ff" />
-      </svg>
-    </td>
-    <td style="border:1px solid #000; border-collapse: collapse;">
-      <svg width="260" height="22">
-        <rect width="260" height="22" fill="#ff0" />
-        <text x="2" y="16" font-size="14" fill="#000">gobject-introspection-1.68.0-11.el9.x86_64</text>
-      </svg>
-    </td>
-  </tr>
+<tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">gobject-introspection-1.68.0-11.el9.x86_64</td><td style="border:1px solid #000; border-collapse: collapse;">gobject-introspection-1.68.0-11.el9.x86_64
+</td><td style="border:1px solid #000; border-collapse: collapse;"></td><td style="border:1px solid #000; border-collapse: collapse;">gobject-introspection-1.68.0-11.el9.x86_64</td></tr>
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">google-noto-cjk-fonts-common-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;">google-noto-cjk-fonts-common-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;"></td><td style="border:1px solid #000; border-collapse: collapse;"></td></tr>
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">google-noto-sans-cjk-ttc-fonts-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;">google-noto-sans-cjk-ttc-fonts-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;"></td><td style="border:1px solid #000; border-collapse: collapse;"></td></tr>
 <tr style="border:1px solid #000; border-collapse: collapse;"><td style="border:1px solid #000; border-collapse: collapse;">google-noto-serif-cjk-ttc-fonts-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;">google-noto-serif-cjk-ttc-fonts-20201206-4.el9.noarch</td><td style="border:1px solid #000; border-collapse: collapse;"></td><td style="border:1px solid #000; border-collapse: collapse;"></td></tr>
