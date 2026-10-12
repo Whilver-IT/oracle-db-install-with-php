@@ -110,9 +110,9 @@ fi; \
 if rpm -qlp /tmp/oracle-db.rpm | grep -q dbhomeXE$; then \
   ADDDNFRPM=" ${ADDDNFRPM} iproute"; \
   # libnslバージョンがAlma9のでないと合わないので
-  NEEDXEPKGS="\
-    https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/c/compat-openssl10-1.0.2o-4.el8_10.1.x86_64.rpm \
-    https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libnsl-2.34-231.el9_7.2.x86_64.rpm"; \
+  NEEDXEPKGS="https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/c/compat-openssl10-1.0.2o-4.el8_10.1.x86_64.rpm"; \
+  needxepkgslatest=$(curl -L https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages | grep -oP 'libnsl-2.34-\K[0-9]+' | sort -Vr | head -n 1); \
+  NEEDXEPKGS="${NEEDXEPKGS} https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libnsl-2.34-${needxepkgslatest}.el9_8.x86_64.rpm"; \
 else \
   ADDDNFRPM=" ${ADDDNFRPM} compat-openssl11"; \
 fi; \
