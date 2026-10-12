@@ -9,7 +9,7 @@ ARG ORAINSTALLRPM=https://download.oracle.com/otn-pub/otn_software/db-free/oracl
 RUN set -eux; \
 # remiとepel-releaseをダウンロード
 curl -L https://rpms.remirepo.net/enterprise/remi-release-9.rpm -o /tmp/remi-release.rpm; \
-curl -L https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/e/epel-release-9-10.el9.noarch.rpm -o /tmp/epel-release.rpm; \
+curl -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release.rpm; \
 # Oracleのパッケージをダウンロード
 curl -L ${ORAPREINSTALLRPM} -o /tmp/oracle-preinstall.rpm; \
 curl -L ${ORAINSTALLRPM} -o /tmp/oracle-db.rpm; \
@@ -172,29 +172,51 @@ libXxf86vm \
 file; \
 # 以下の依存解決は仕方なくCentOS Stream9のパッケージでお茶を濁しておくw
 # rpmのURLがバージョンアップなどで、ダウンロードできなくなる可能性はあることに注意
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'ksh-1.0.6.\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/ksh-1.0.6-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'nfs-utils-2.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/nfs-utils-2.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libnfsidmap-2.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libnfsidmap-2.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'e2fsprogs-libs-1.46.5-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/e2fsprogs-libs-1.46.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'quota-nls-4.09-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-nls-4.09-${needcentospkgslatest}.el9.noarch.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'quota-4.09-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-4.09-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'rpcbind-1.2.6-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/rpcbind-1.2.6-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libbasicobjects-0.1.1-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libbasicobjects-0.1.1-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libcollection-0.7.0-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libcollection-0.7.0-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libref_array-0.1.5-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libref_array-0.1.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libini_config-1.3.1-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libini_config-1.3.1-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libev-4.33-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libev-4.33-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libverto-libev-0.3.2-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libverto-libev-0.3.2-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'gssproxy-0.8.4-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/gssproxy-0.8.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'smartmontools-7.2-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/smartmontools-7.2-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'pcp-conf-6.3.7-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-conf-6.3.7-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'pcp-libs-6.3.7-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-libs-6.3.7-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'sysstat-12.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/sysstat-12.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'libXxf86dga-1.1.5-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libXxf86dga-1.1.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'libdmx-1.1.4-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libdmx-1.1.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
+needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'xorg-x11-utils-7.5-\K[0-9]+' | sort -Vr | head -n 1); \
+NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/xorg-x11-utils-7.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
 env ORACLE_DOCKER_INSTALL=true rpm -ivh \
 ${NEEDXEPKGS} \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/ksh-1.0.6-14.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/nfs-utils-2.5.4-39.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libnfsidmap-2.5.4-39.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/e2fsprogs-libs-1.46.5-8.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-nls-4.09-4.el9.noarch.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-4.09-4.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/rpcbind-1.2.6-7.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libbasicobjects-0.1.1-53.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libcollection-0.7.0-53.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libref_array-0.1.5-53.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libini_config-1.3.1-53.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libev-4.33-6.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libverto-libev-0.3.2-3.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/gssproxy-0.8.4-7.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/smartmontools-7.2-9.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-conf-6.3.7-5.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-libs-6.3.7-5.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/sysstat-12.5.4-9.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libXxf86dga-1.1.5-8.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libdmx-1.1.4-12.el9.x86_64.rpm \
-https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/xorg-x11-utils-7.5-40.el9.x86_64.rpm \
+${NEEDCENTOSPKGS} \
 # ビルドステージから持ってきたOracleをここで指定
 /tmp/oracle-preinstall.rpm \
 /tmp/oracle-db.rpm; \

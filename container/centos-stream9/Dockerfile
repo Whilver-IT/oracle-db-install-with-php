@@ -9,7 +9,7 @@ ARG ORAINSTALLRPM=https://download.oracle.com/otn-pub/otn_software/db-free/oracl
 RUN set -eux; \
 # remiとepel-releaseをダウンロード
 curl -L https://rpms.remirepo.net/enterprise/remi-release-9.rpm -o /tmp/remi-release.rpm; \
-curl -L https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/e/epel-release-9-10.el9.noarch.rpm -o /tmp/epel-release.rpm; \
+curl -L https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -o /tmp/epel-release.rpm; \
 # Oracleのパッケージをダウンロード
 curl -L ${ORAPREINSTALLRPM} -o /tmp/oracle-preinstall.rpm; \
 curl -L ${ORAINSTALLRPM} -o /tmp/oracle-db.rpm; \
