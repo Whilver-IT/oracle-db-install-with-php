@@ -64,6 +64,15 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
 # ロケールのデフォルトはja_JP.UTF-8
 ARG LANG=ja_JP.UTF-8
 
+# ubi URL
+ARG UBI_URL=https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8
+
+# Alma Linux URL
+ARG ALMA_URL=https://repo.almalinux.org/almalinux/9/BaseOS
+
+# CentOS9 Stream URL
+ARG CENTOS9_URL=https://mirror.stream.centos.org/9-stream
+
 # GOSUのバージョンを指定
 ENV GOSU_VERSION=1.18
 
@@ -109,10 +118,12 @@ fi; \
 # XEかどうかを確認し、そうならcompat-openssl10とlibnslを入れる
 if rpm -qlp /tmp/oracle-db.rpm | grep -q dbhomeXE$; then \
   ADDDNFRPM=" ${ADDDNFRPM} iproute"; \
+  UBI_PKGS_URL=${UBI_URL}/${UNAME_ARCH}/appstream/os/Packages; \
+  ALMA_PKGS_URL=${ALMA_URL}/${UNAME_ARCH}/os/Packages; \
   # libnslバージョンがAlma9のでないと合わないので
-  NEEDXEPKGS="https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/c/compat-openssl10-1.0.2o-4.el8_10.1.x86_64.rpm"; \
-  needxepkgslatest=$(curl -L https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages | grep -oP 'libnsl-2.34-\K[0-9]+' | sort -Vr | head -n 1); \
-  NEEDXEPKGS="${NEEDXEPKGS} https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libnsl-2.34-${needxepkgslatest}.el9_8.x86_64.rpm"; \
+  NEEDXEPKGS="${UBI_PKGS_URL}/c/compat-openssl10-1.0.2o-4.el8_10.1.${UNAME_ARCH}.rpm"; \
+  needxepkgslatest=$(curl -L ${ALMA_PKGS_URL} | grep -oP 'libnsl-2.34-\K[0-9]+' | sort -Vr | head -n 1); \
+  NEEDXEPKGS="${NEEDXEPKGS} ${ALMA_PKGS_URL}/libnsl-2.34-${needxepkgslatest}.el9_8.${UNAME_ARCH}.rpm"; \
 else \
   ADDDNFRPM=" ${ADDDNFRPM} compat-openssl11"; \
 fi; \
@@ -172,51 +183,58 @@ libXxf86vm \
 file; \
 # 以下の依存解決は仕方なくCentOS Stream9のパッケージでお茶を濁しておくw
 # rpmのURLがバージョンアップなどで、ダウンロードできなくなる可能性はあることに注意
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'ksh-1.0.6.\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/ksh-1.0.6-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'nfs-utils-2.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/nfs-utils-2.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libnfsidmap-2.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libnfsidmap-2.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'e2fsprogs-libs-1.46.5-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/e2fsprogs-libs-1.46.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'quota-nls-4.09-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-nls-4.09-${needcentospkgslatest}.el9.noarch.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'quota-4.09-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/quota-4.09-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'rpcbind-1.2.6-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/rpcbind-1.2.6-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libbasicobjects-0.1.1-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libbasicobjects-0.1.1-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libcollection-0.7.0-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libcollection-0.7.0-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libref_array-0.1.5-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libref_array-0.1.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libini_config-1.3.1-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libini_config-1.3.1-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libev-4.33-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libev-4.33-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'libverto-libev-0.3.2-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/libverto-libev-0.3.2-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'gssproxy-0.8.4-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/gssproxy-0.8.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages | grep -oP 'smartmontools-7.2-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/Packages/smartmontools-7.2-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'pcp-conf-6.3.7-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-conf-6.3.7-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'pcp-libs-6.3.7-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/pcp-libs-6.3.7-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'sysstat-12.5.4-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/sysstat-12.5.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'libXxf86dga-1.1.5-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libXxf86dga-1.1.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'libdmx-1.1.4-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/libdmx-1.1.4-${needcentospkgslatest}.el9.x86_64.rpm"; \
-needcentospkgslatest=$(curl -L https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages | grep -oP 'xorg-x11-utils-7.5-\K[0-9]+' | sort -Vr | head -n 1); \
-NEEDCENTOSPKGS="${NEEDCENTOSPKGS} https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/xorg-x11-utils-7.5-${needcentospkgslatest}.el9.x86_64.rpm"; \
+CENTOS9_APPSTREAM_PKGS_HTML=/tmp/centos9_appstream_packages.html; \
+curl -L ${CENTOS9_URL}/AppStream/${UNAME_ARCH}/os/Packages -o ${CENTOS9_APPSTREAM_PKGS_HTML}; \
+CENTOS9_BASEOS_PKGS_HTML=/tmp/centos9_baseos_packages.html; \
+curl -L ${CENTOS9_URL}/BaseOS/${UNAME_ARCH}/os/Packages -o ${CENTOS9_BASEOS_PKGS_HTML}; \
+get_centos9_pkg_latest_version() { \
+  grep -oP "${1}\K[0-9]+" "${2}" | sort -Vr | head -n 1; \
+}; \
+NEEDCENTOS9PKGS=( \
+  "ksh-1.0.6- AppStream" \
+  "nfs-utils-2.5.4- BaseOS" \
+  "libnfsidmap-2.5.4- BaseOS" \
+  "e2fsprogs-libs-1.46.5- BaseOS" \
+  "quota-nls-4.09- BaseOS" \
+  "quota-4.09- BaseOS" \
+  "rpcbind-1.2.6- BaseOS" \
+  "libbasicobjects-0.1.1- BaseOS" \
+  "libcollection-0.7.0- BaseOS" \
+  "libref_array-0.1.5- BaseOS" \
+  "libini_config-1.3.1- BaseOS" \
+  "libev-4.33- BaseOS" \
+  "libverto-libev-0.3.2- BaseOS" \
+  "gssproxy-0.8.4- BaseOS" \
+  "smartmontools-7.2- BaseOS" \
+  "pcp-conf-6.3.7- AppStream" \
+  "pcp-libs-6.3.7- AppStream" \
+  "sysstat-12.5.4- AppStream" \
+  "libXxf86dga-1.1.5- AppStream" \
+  "libdmx-1.1.4- AppStream" \
+  "xorg-x11-utils-7.5- AppStream" \
+); \
+NEEDCENTOSPKGSSTR=""; \
+for items in "${NEEDCENTOS9PKGS[@]}"; do \
+  item=(${items}); \
+  echo "${item[0]} ${item[1]}"; \
+  if [ "${item[1]}" == "AppStream" ]; then \
+    html="${CENTOS9_APPSTREAM_PKGS_HTML}"; \
+  else \
+    html="${CENTOS9_BASEOS_PKGS_HTML}"; \
+  fi; \
+  latest=$(get_centos9_pkg_latest_version ${item[0]} ${html}); \
+  if [ "${item[0]}" == "quota-nls-4.09-" ]; then \
+    pkgarch="noarch"; \
+  else \
+    pkgarch="${UNAME_ARCH}"; \
+  fi; \
+  NEEDCENTOSPKGSSTR="${NEEDCENTOSPKGSSTR} ${CENTOS9_URL}/${item[1]}/${UNAME_ARCH}/os/Packages/${item[0]}${latest}.el9.${pkgarch}.rpm"; \
+done; \
+rm ${CENTOS9_APPSTREAM_PKGS_HTML}; \
+rm ${CENTOS9_BASEOS_PKGS_HTML}; \
 env ORACLE_DOCKER_INSTALL=true rpm -ivh \
 ${NEEDXEPKGS} \
-${NEEDCENTOSPKGS} \
+${NEEDCENTOSPKGSSTR} \
 # ビルドステージから持ってきたOracleをここで指定
 /tmp/oracle-preinstall.rpm \
 /tmp/oracle-db.rpm; \
